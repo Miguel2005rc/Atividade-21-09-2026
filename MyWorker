@@ -1,0 +1,32 @@
+package com.example.myapplication
+
+import android.content.Context
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import androidx.work.workDataOf
+import kotlinx.coroutines.delay
+
+class MyWorker(
+    appContext: Context,
+    workerParams: WorkerParameters
+) : CoroutineWorker(
+    appContext,
+    workerParams
+) {
+
+    override suspend fun doWork(): Result {
+
+        for (progress in 0..100 step 10) {
+
+            delay(500)
+
+            setProgress(
+                androidx.work.workDataOf(
+                    "progress" to progress
+                )
+            )
+        }
+
+        return Result.success()
+    }
+}
